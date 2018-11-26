@@ -11,7 +11,7 @@ module.exports = async function (context, req) {
         try {
             const siteName = req.body.site;
 
-            const vaultUri = "https://simonsfuncvault.vault.azure.net/";
+            const vaultUri = "https://<vaultname>.vault.azure.net/";
             
             // Should always be https://vault.azure.net
             const credentials = await msRestAzure.loginWithAppServiceMSI({resource: 'https://vault.azure.net'});
@@ -44,8 +44,8 @@ module.exports = async function (context, req) {
             };
         } catch (error) {
             context.res = {
-                status: 400,
-                body: `${JSON.stringify(error)}`
+                status: error.status,
+                body: error
             }
         }
     }
